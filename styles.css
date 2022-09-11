@@ -729,6 +729,7 @@ textarea {
 .arcadian-modal main {
 	max-height: 400px;
 	overflow-y: auto;
+	scrollbar-width: none;
 }
 
 .arcadian-modal main::-webkit-scrollbar {
