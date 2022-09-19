@@ -207,7 +207,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	mount(document.body, intro);
 	mount(document.body, intro2);
 });
-console.log('td2s22f');
+
 window.addEventListener('beforeunload', function () {
 	saveState();
 });

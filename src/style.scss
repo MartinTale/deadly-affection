@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@300;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Shojumaru&family=Fredoka:wght@300;500&display=swap');
 
 :root {
 	--bg: #03182b;
@@ -77,7 +77,7 @@ body {
 	scroll-behavior: smooth;
 	text-rendering: optimizeSpeed;
 	line-height: 1.5;
-	font-family: "Fredoka", sans-serif;
+	font-family: 'Fredoka', sans-serif;
 	background: #060606;
 	color: #fff;
 	text-shadow: 1px 1px 2px #000;
@@ -142,7 +142,8 @@ svg {
 	filter: drop-shadow(0 0 5px #000);
 }
 
-.game, .header {
+.game,
+.header {
 	width: 100%;
 	min-width: 400px;
 	max-width: 400px;
@@ -157,7 +158,7 @@ svg {
 
 .header {
 	position: fixed;
-    top: 0;
+	top: 0;
 	transform-origin: top;
 	pointer-events: none;
 	z-index: 50;
@@ -458,7 +459,8 @@ button.primary {
 
 .cell.start {
 	background: var(--bg);
-	box-shadow: 0 0 0 2px var(--color), 0 0 6px var(--shadow), 0 0 9px var(--shadow), 0 0 12px var(--shadow);
+	box-shadow: 0 0 0 2px var(--color), 0 0 6px var(--shadow), 0 0 9px var(--shadow),
+		0 0 12px var(--shadow);
 	border: 0;
 	overflow: hidden;
 }
@@ -477,7 +479,8 @@ button.primary {
 	filter: none;
 }
 
-.game-screen b, .header b {
+.game-screen b,
+.header b {
 	font-size: 2rem;
 }
 
@@ -564,7 +567,7 @@ b.sep:after {
 .arcadians {
 	flex-wrap: wrap;
 	font-size: 0.8rem;
-    color: var(--shadow);
+	color: var(--shadow);
 }
 
 .arcadians img {
@@ -599,7 +602,7 @@ b.sep:after {
 
 .intro,
 .intro2 {
-	font-family: "FredokaOne", "Comic Sans MS", "Comic Sans", cursive;
+	font-family: 'Shojumaru', cursive;
 	position: fixed;
 	width: 100%;
 	height: 100%;
@@ -607,6 +610,10 @@ b.sep:after {
 	text-align: center;
 	cursor: pointer;
 	transition: all 1s;
+}
+
+.header b {
+	font-size: 3rem;
 }
 
 .intro > * {
@@ -618,11 +625,12 @@ b.sep:after {
 .intro .necromancer {
 	opacity: 1;
 	transform: none;
-	width: min(20vw, 20vh);
+	width: min(20vw, 18vh);
 	animation: none;
 }
 
 .intro b {
+	font-family: 'Fredoka', sans-serif;
 	font-size: min(4vw, 4vh);
 	text-shadow: 0 0 5px #1b5285, 0 0 10px #1b5285;
 }
@@ -632,7 +640,7 @@ b.sep:after {
 }
 
 .intro div svg {
-	width: min(10vw, 10vh);
+	width: min(15vw, 12vh);
 	fill: #a32020;
 	filter: drop-shadow(0 0 5px #fa7c7c) drop-shadow(0 0 10px #fa7c7c);
 	transform: scale(0.6);
@@ -666,6 +674,8 @@ b.sep:after {
 
 .intro2 .love {
 	animation: none;
+	font-size: min(13vw, 13vh);
+	margin-top: max(-6vw, -6vh);
 }
 
 .intro2 .fairy.active {
@@ -676,6 +686,7 @@ b.sep:after {
 
 .intro2 .death {
 	margin: 0;
+	font-size: min(18vw, 18vh);
 }
 
 .death {
@@ -683,14 +694,14 @@ b.sep:after {
 	color: #1b5285;
 	text-shadow: 0 0 5px #75bcff, 0 0 10px #75bcff, 0 0 15px #75bcff;
 	margin-bottom: min(-1vw, -1vh);
-	margin-top: min(-2vw, -2vh);
+	margin-top: min(1vw, 1vh);
 }
 
 .love {
-	font-size: min(15vw, 15vh);
+	font-size: min(18vw, 18vh);
 	color: #a32020;
 	text-shadow: 0 0 5px #fa7c7c, 0 0 10px #fa7c7c, 0 0 15px #fa7c7c;
-	margin-top: max(-4vw, -4vh);
+	margin-top: max(-1vw, -1vh);
 	animation: grow 750ms linear infinite;
 }
 
@@ -704,7 +715,7 @@ b.sep:after {
 	position: absolute;
 	background: var(--color);
 	box-shadow: 0 0 3px var(--shadow), 0 0 6px var(--shadow), 0 0 9px var(--shadow);
-    transform: rotate(45deg);
+	transform: rotate(45deg);
 	border-radius: 3px;
 }
 
@@ -734,7 +745,7 @@ b.sep:after {
 
 textarea {
 	width: 50%;
-    height: 50%;
+	height: 50%;
 }
 
 .arcadian-modal main {
@@ -744,5 +755,5 @@ textarea {
 }
 
 .arcadian-modal main::-webkit-scrollbar {
-    display: none;
+	display: none;
 }
