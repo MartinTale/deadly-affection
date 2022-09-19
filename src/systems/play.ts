@@ -238,10 +238,8 @@ export function processPuzzleProgress() {
 
 		const nextLevel = state.level + 1;
 		const thereAreMoreLevels = nextLevel < levels.length;
-		const lockedCoilLevels = state.coilTotal <= 0 && nextLevel >= 12 && nextLevel <= 14
-		const lockedNearLevels = !state.near && nextLevel >= 15 && nextLevel <= 17
 
-		if (thereAreMoreLevels && lockedCoilLevels === false && lockedNearLevels === false) {
+		if (thereAreMoreLevels) {
 			buttons.push({
 				content: 'Next',
 				type: 'primary',

@@ -476,7 +476,8 @@ button.primary {
 }
 
 .game-screen .end {
-	filter: none;
+	filter: grayscale(1);
+	transform: rotate(180deg);
 }
 
 .game-screen b,
@@ -485,8 +486,8 @@ button.primary {
 }
 
 .end.active {
-	filter: grayscale(1);
-	transform: rotate(180deg);
+	filter: grayscale(0);
+	transform: rotate(0deg);
 }
 
 .cell,
