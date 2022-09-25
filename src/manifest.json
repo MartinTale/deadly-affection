@@ -56,7 +56,7 @@
 		}
 	],
 	"lang": "en-GB",
-	"start_url": "/",
+	"start_url": "./",
 	"display": "fullscreen",
 	"theme_color": "#ffc9ff",
 	"background_color": "#ffc9ff"
