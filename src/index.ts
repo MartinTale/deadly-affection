@@ -2,8 +2,6 @@ import './style.scss';
 import { initGame, gameContainer, headerContainer } from './systems/game';
 import { initGameState, saveState, state } from './systems/state';
 import { initMusic } from './components/music';
-import { initNEAR } from './systems/near';
-import { initCoil } from './systems/coil';
 import { playLevel } from './systems/play';
 import { getSVGElement } from './helpers/utilities';
 import { SVGs } from './helpers/svgs';
@@ -110,8 +108,6 @@ function loop(c: any, f: any, w: any, h: any, firefly: any) {
 
 window.addEventListener('DOMContentLoaded', () => {
 	initGameState();
-	initNEAR();
-	initCoil();
 	initGame();
 	initMusic();
 
