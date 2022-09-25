@@ -8,7 +8,7 @@ module.exports = {
 		filename: '[name].bundle.js',
 		path: path.resolve(__dirname, 'dist'),
 		clean: true,
-		publicPath: '/',
+		publicPath: './',
 	},
 	module: {
 		rules: [
@@ -45,10 +45,14 @@ module.exports = {
 		new CopyPlugin({
 			patterns: [
 				{ from: "src/audio", to: "audio" },
+				{ from: "src/assets", to: "./" },
+				{ from: "src/service-worker.js", to: "service-worker.js" },
+				{ from: "src/manifest.json", to: "manifest.json" },
+				{ from: "src/robots.txt", to: "robots.txt" },
 			],
 		}),
 		new HtmlWebpackPlugin({
-			title: 'Deadly Affection',
+			template: 'src/index.html',
 		}),
 	],
 	optimization: {

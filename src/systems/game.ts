@@ -238,6 +238,23 @@ export async function openArcadiaScreen() {
 
 export let soundToggle: ToggleSetting;
 
+
+let deferredPrompt: any = null;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    deferredPrompt = e;
+
+	new LinkSetting(headerContainer, SVGs.install, '#ffffff', 112, 360, async () => {
+		if (deferredPrompt !== null) {
+			deferredPrompt.prompt();
+			const { outcome } = await deferredPrompt.userChoice;
+			if (outcome === 'accepted') {
+				deferredPrompt = null;
+			}
+		}
+	});
+});
+
 export function initGame() {
 	headerContainer = el('div.header');
 	gameContainer = el('div.game');
