@@ -3,6 +3,7 @@ import { el } from 'redom';
 import { SVGs } from '../helpers/svgs';
 import { getSVGElement } from '../helpers/utilities';
 import { state } from '../systems/state';
+import { colorSchemes } from '../systems/game';
 import { Base, PathDirection } from './base';
 
 export class Start extends Base {
@@ -11,12 +12,8 @@ export class Start extends Base {
 		cellKey: string,
 		outputs?: (Rotation | null)[],
 	) {
-		let img = null;
-
-		if (state.arcadian.image != '') {
-			img = el('img') as HTMLImageElement;
-			img.src = state.arcadian.image;
-		}
+		const scheme = colorSchemes[state.colorScheme];
+		const iconSvg = getSVGElement(SVGs[scheme.icon]);
 
 		const out: PathDirection[] = [];
 		for (let i = 0; i < 4; i += 1) {
@@ -30,8 +27,8 @@ export class Start extends Base {
 		super(
 			'start',
 			cellKey,
-			el('div.cell', img as HTMLElement),
-			img ? el('div.empty') : getSVGElement(SVGs.necromancer),
+			el('div.cell'),
+			iconSvg,
 			rotation,
 			true,
 			true,

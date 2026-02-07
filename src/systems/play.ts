@@ -88,7 +88,7 @@ export function playLevel(level: number) {
 		if (cellValue?.iconElement) {
 			let padding = 0;
 
-			if (cellValue.name !== 'start' || state.arcadian.image === '') {
+			if (cellValue.name !== 'start') {
 				padding = (cellSize - cellMargin * 2) * 0.2;
 			}
 

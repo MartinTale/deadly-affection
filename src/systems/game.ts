@@ -7,17 +7,21 @@ import { el, mount } from "redom";
 import { SVGs } from "../helpers/svgs";
 import { createGameScreen } from "../screens/game";
 import { createLevelsScreen } from "../screens/levels";
-import { randomIntFromInterval } from "../helpers/utilities";
+import { getSVGElement } from "../helpers/utilities";
 import { state } from "./state";
 import { playLevel } from "./play";
 
-declare global {
-	interface Window {
-		_ethers: any;
-		ethereum: any;
-		Moralis: any;
-	}
-}
+export const colorSchemes = [
+	{ name: 'Ocean', bg: '#03182b', color: '#8be9ff', shadow: '#4f838f', icon: 'ocean-mage' as keyof typeof SVGs },
+	{ name: 'Sunset', bg: '#2b1803', color: '#ffb366', shadow: '#8f6b4f', icon: 'sunset-ranger' as keyof typeof SVGs },
+	{ name: 'Forest', bg: '#0b1f1b', color: '#4fff88', shadow: '#2d8f52', icon: 'forest-druid' as keyof typeof SVGs },
+	{ name: 'Magenta', bg: '#2b0333', color: '#ff33ff', shadow: '#8f4f7f', icon: 'magenta-witch' as keyof typeof SVGs },
+	{ name: 'Gold', bg: '#2b2303', color: '#ffdd44', shadow: '#8f7f4f', icon: 'gold-knight' as keyof typeof SVGs },
+	{ name: 'Purple', bg: '#1a0b2e', color: '#bb86fc', shadow: '#6b4f8f', icon: 'purple-sorcerer' as keyof typeof SVGs },
+	{ name: 'Coral', bg: '#2b1a18', color: '#ff7f6b', shadow: '#8f5f52', icon: 'coral-pirate' as keyof typeof SVGs },
+	{ name: 'Cyan', bg: '#0b2929', color: '#33ffff', shadow: '#4f8f8f', icon: 'cyan-wizard' as keyof typeof SVGs },
+	{ name: 'Rose', bg: '#2b1a25', color: '#ff6bb6', shadow: '#8f5f7f', icon: 'rose-paladin' as keyof typeof SVGs },
+];
 
 export let levelIndicator: HTMLElement;
 export let headerContainer: HTMLElement;
@@ -25,265 +29,64 @@ export let gameContainer: HTMLElement;
 
 export let screens: Screens;
 
-function getAverageRGB(imgEl: HTMLImageElement) {
-	var blockSize = 5, // only visit every 5 pixels
-		defaultRGB = { r: 0, g: 0, b: 0 }, // for non-supporting envs
-		canvas = document.createElement("canvas"),
-		context = canvas.getContext && canvas.getContext("2d"),
-		data,
-		width,
-		height,
-		i = -4,
-		length,
-		rgb = { r: 0, g: 0, b: 0 },
-		count = 0;
+function applyColorScheme(schemeIndex: number) {
+	const scheme = colorSchemes[schemeIndex];
+	state.colorScheme = schemeIndex;
 
-	if (!context) {
-		return defaultRGB;
-	}
-
-	height = canvas.height = imgEl.naturalHeight || imgEl.offsetHeight || imgEl.height;
-	width = canvas.width = imgEl.naturalWidth || imgEl.offsetWidth || imgEl.width;
-
-	context.drawImage(imgEl, 0, 0);
-
-	try {
-		data = context.getImageData(0, 0, width, height);
-	} catch (e) {
-		/* security error, img on diff domain */
-		return defaultRGB;
-	}
-
-	length = data.data.length;
-
-	while ((i += blockSize * 4) < length) {
-		++count;
-		rgb.r += data.data[i];
-		rgb.g += data.data[i + 1];
-		rgb.b += data.data[i + 2];
-	}
-
-	// ~~ used to floor values
-	rgb.r = ~~(rgb.r / count);
-	rgb.g = ~~(rgb.g / count);
-	rgb.b = ~~(rgb.b / count);
-
-	return rgb;
-}
-
-function resetTheme() {
-	state.arcadian = {
-		bg: "",
-		color: "",
-		shadow: "",
-		image: "",
-	};
-
-	document.documentElement.style.setProperty("--bg", "#03182b");
-	document.documentElement.style.setProperty("--color", "#8be9ff");
-	document.documentElement.style.setProperty("--shadow", "#4f838f");
+	document.documentElement.style.setProperty("--bg", scheme.bg);
+	document.documentElement.style.setProperty("--color", scheme.color);
+	document.documentElement.style.setProperty("--shadow", scheme.shadow);
 
 	playLevel(state.level);
 	screens.openScreen("game");
+	closeModal();
 }
 
-async function addArcadian(container: HTMLElement, id: string) {
-	const image = el("img") as HTMLImageElement;
-	mount(container, image);
+export function openColorSchemeScreen() {
+	const schemeContainer = el("div.color-schemes");
 
-	const arcadian = await (await fetch("https://api.arcadians.io/" + id)).json();
+	colorSchemes.forEach((scheme, index) => {
+		const iconSvg = getSVGElement(SVGs[scheme.icon]);
+		iconSvg.style.fill = scheme.color;
 
-	if (arcadian?.image) {
-		let blob = await fetch(arcadian.image).then((r) => r.blob());
-		let dataUrl: string = await new Promise((resolve) => {
-			let reader = new FileReader();
-			reader.onload = () => resolve(reader.result as string);
-			reader.readAsDataURL(blob);
-		});
+		const button = el(
+			"div.scheme-button",
+			{
+				style: `background: ${scheme.bg}; border-color: ${scheme.color};`,
+			},
+			[iconSvg, el("span", scheme.name)]
+		) as HTMLElement;
 
-		image.onload = () => {
-			const colorValues = getAverageRGB(image);
+		if (index === state.colorScheme) {
+			button.classList.add("active");
+		}
 
-			const bg =
-				"rgb(" +
-				Math.max(0, colorValues.r * 0.25) +
-				"," +
-				Math.max(0, colorValues.g * 0.25) +
-				"," +
-				Math.max(0, colorValues.b * 0.25) +
-				")";
-			const color =
-				"rgb(" +
-				Math.min(255, colorValues.r * 1.5) +
-				"," +
-				Math.min(255, colorValues.g * 1.5) +
-				"," +
-				Math.min(255, colorValues.b * 1.5) +
-				")";
-			const shadow =
-				"rgb(" +
-				Math.min(255, colorValues.r * 1.2) +
-				"," +
-				Math.min(255, colorValues.g * 1.2) +
-				"," +
-				Math.min(255, colorValues.b * 1.2) +
-				")";
-
-			image.style.borderColor = color;
-			image.style.boxShadow =
-				"0 0 0 2px " +
-				color +
-				", 0 0 5px " +
-				shadow +
-				", 0 0 8px " +
-				shadow +
-				", 0 0 11px " +
-				shadow;
-
-			image.classList.add("active");
-
-			image.onclick = () => {
-				state.arcadian = {
-					bg,
-					color,
-					shadow,
-					image: dataUrl,
-				};
-
-				document.documentElement.style.setProperty("--bg", bg);
-				document.documentElement.style.setProperty("--color", color);
-				document.documentElement.style.setProperty("--shadow", shadow);
-
-				playLevel(state.level);
-				screens.openScreen("game");
-
-				closeModal();
-			};
+		button.onclick = () => {
+			applyColorScheme(index);
 		};
 
-		image.src = dataUrl;
-	}
-}
+		mount(schemeContainer, button);
+	});
 
-function showMyArcadians(container: HTMLElement) {
-	if (state.nfts.length > 0) {
-		container.innerHTML = "";
-
-		for (let i = 0; i < state.nfts.length; i += 1) {
-			const nftId = state?.nfts?.[i]?.token_id ?? "9999";
-			addArcadian(container, nftId);
-		}
-	}
-}
-
-export async function openArcadiaScreen() {
-	const myArcadianContainer = el("div.arcadians", "Login to use your Arcadians");
-	const randomArcadianContainer = el("div.arcadians");
-
-	const buttons: Button[] = [];
-
-	if (state.wallet !== "") {
-		buttons.push({
-			type: "danger",
-			content: "Logout",
-			onClickCallback: () => {
-				state.wallet = "";
-				state.nfts = [];
-
-				resetTheme();
-			},
-		});
-	}
-
-	buttons.push(
-		{
-			type: "normal",
-			content: "Reset",
-			onClickCallback: resetTheme,
-		},
+	const buttons: Button[] = [
 		{
 			type: "normal",
 			content: "Close",
 			onClickCallback: () => {},
 		},
-		{
-			type: "normal",
-			content: "Refresh",
-			onClickCallback: () => {
-				requestAnimationFrame(openArcadiaScreen);
-			},
-		},
-	);
-
-	if (state.wallet === "") {
-		buttons.push({
-			type: "primary",
-			content: "Login",
-			onClickCallback: async () => {
-				if (window.ethereum) {
-					const provider = new window._ethers.providers.Web3Provider(window.ethereum, "any");
-					await provider.send("eth_requestAccounts", []);
-					const signer = provider.getSigner();
-
-					let wallet = await signer.getAddress();
-
-					if (wallet) {
-						state.wallet = wallet;
-
-						const options = {
-							method: "GET",
-							headers: {
-								Accept: "application/json",
-								"X-API-Key": "T25ZjLSEEP76wQrXEgTrSKfnr5MWAcWvwLJuNsPdf0tuiArk7KcQMwpJimnzXfsm",
-							},
-						};
-
-						fetch(
-							"https://deep-index.moralis.io/api/v2/" +
-								wallet +
-								"/nft?chain=eth&format=decimal&token_addresses=0xc3c8a1e1ce5386258176400541922c414e1b35fd",
-							options,
-						)
-							.then((response) => response.json())
-							.then((response) => {
-								state.nfts = response.result;
-
-								showMyArcadians(myArcadianContainer);
-								requestAnimationFrame(openArcadiaScreen);
-							})
-							.catch((err) => alert(err.message));
-
-						return;
-					}
-				}
-
-				alert("No wallet installed in browser :(");
-			},
-		});
-	} else {
-		myArcadianContainer.innerHTML = "You have no Arcadians :(";
-	}
-
-	showMyArcadians(myArcadianContainer);
+	];
 
 	openModal(
 		gameContainer,
-		"Arcadia",
+		"Color Schemes",
 		[
-			el("p", "Pick an Arcadian to change the theme!"),
-			el("b.sep", "Your Arcadians"),
-			myArcadianContainer,
-			el("b.sep", "Random Arcadians"),
-			randomArcadianContainer,
+			el("p", "Pick a color scheme!"),
+			schemeContainer,
 		],
 		buttons,
 		() => {},
-		"arcadian-modal",
+		"color-scheme-modal",
 	);
-
-	for (let i = 0; i < 9; i += 1) {
-		addArcadian(randomArcadianContainer, randomIntFromInterval(1, 3000).toString());
-	}
 }
 
 export let soundToggle: ToggleSetting;
@@ -330,7 +133,7 @@ export function initGame() {
 		"https://ko-fi.com/martintale?ref=deadly-affection",
 	);
 
-	new LinkSetting(headerContainer, SVGs.joystick, "#ff3ed9", 76, 360, openArcadiaScreen);
+	new LinkSetting(headerContainer, SVGs.palette, "#ff3ed9", 76, 360, openColorSchemeScreen);
 
 	soundToggle = new ToggleSetting(headerContainer, SVGs.sound, "sound", 4, 4);
 
@@ -344,6 +147,12 @@ export function initGame() {
 
 	globalThis.onresize = resizeGame;
 	resizeGame();
+
+	// Apply saved color scheme on startup
+	const scheme = colorSchemes[state.colorScheme];
+	document.documentElement.style.setProperty("--bg", scheme.bg);
+	document.documentElement.style.setProperty("--color", scheme.color);
+	document.documentElement.style.setProperty("--shadow", scheme.shadow);
 }
 
 export function getScale() {

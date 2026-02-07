@@ -63,15 +63,6 @@ function revealIntro(element: HTMLElement) {
 function completeIntro() {
 	if (introInProgress) {
 		introInProgress = false;
-		if (state.arcadian.image != '') {
-			document.documentElement.style.setProperty('--bg', state.arcadian.bg);
-			document.documentElement.style.setProperty('--color', state.arcadian.color);
-			document.documentElement.style.setProperty('--shadow', state.arcadian.shadow);
-			fireflyColor = state.arcadian.color;
-		} else {
-			document.documentElement.style.setProperty('--bg', '#03182b');
-			fireflyColor = '#8be9ff';
-		}
 
 		intro.style.opacity = '0';
 		intro.style.pointerEvents = 'none';

@@ -4,28 +4,14 @@ export type Setting = 'sound' | 'screen';
 
 export type State = {
 	sound: boolean | null;
-	wallet: string;
-	nfts: any[];
-	arcadian: {
-		bg: string;
-		color: string;
-		shadow: string;
-		image: string;
-	};
+	colorScheme: number;
 	level: number;
 	progress: { [key: number]: [boolean, number] };
 };
 
 export const emptyState: State = {
 	sound: null,
-	wallet: '',
-	nfts: [],
-	arcadian: {
-		bg: '',
-		color: '',
-		shadow: '',
-		image: '',
-	},
+	colorScheme: 0,
 	level: 0,
 	progress: {},
 };
