@@ -59,10 +59,7 @@ export function renderLevels() {
 			mount(levelScreen, el('b.sep', 'Normal'));
 		}
 		if (i == 14) {
-			mount(levelScreen, el('b.sep', 'Coil'));
-		}
-		if (i == 17) {
-			mount(levelScreen, el('b.sep', 'NEAR'));
+			mount(levelScreen, el('b.sep', 'Medium'));
 		}
 	}
 }

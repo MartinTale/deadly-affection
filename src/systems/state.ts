@@ -4,8 +4,6 @@ export type Setting = 'sound' | 'screen';
 
 export type State = {
 	sound: boolean | null;
-	coilTotal: number;
-	near: boolean;
 	wallet: string;
 	nfts: any[];
 	arcadian: {
@@ -20,8 +18,6 @@ export type State = {
 
 export const emptyState: State = {
 	sound: null,
-	coilTotal: 0,
-	near: false,
 	wallet: '',
 	nfts: [],
 	arcadian: {
