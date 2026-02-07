@@ -264,7 +264,7 @@ export function initGame() {
 		game: createGameScreen(),
 	});
 
-	new LinkSetting(headerContainer, SVGs.discord, '#5865F2', 4, 360, 'https://discord.gg/kPf8XwNuZT');
+	new LinkSetting(headerContainer, SVGs.discord, '#5865F2', 4, 360, 'https://discord.com/invite/NygP3y7wsE');
 	new LinkSetting(headerContainer, SVGs.coffee, '#FBAA19', 40, 360, 'https://ko-fi.com/martintale?ref=deadly-affection');
 
 	new LinkSetting(headerContainer, SVGs.joystick, '#ff3ed9', 76, 360, openArcadiaScreen);
