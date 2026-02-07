@@ -5,9 +5,9 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx webpack serve --open --config webpack.dev.js",
-    "prod": "npx webpack --config webpack.prod.js",
-    "serve": "npx webpack --config webpack.prod.js && http-server dist"
+    "dev": "vite",
+    "prod": "vite build",
+    "serve": "vite build && http-server dist"
   },
   "keywords": [],
   "author": "",
@@ -16,22 +16,10 @@
     "@types/howler": "^2.2.7",
     "@types/lodash": "^4.14.185",
     "@types/redom": "^3.23.1",
-    "copy-webpack-plugin": "^11.0.0",
-    "css-loader": "^6.7.1",
-    "file-loader": "^6.2.0",
-    "html-webpack-plugin": "^5.5.0",
     "http-server": "^14.1.1",
     "sass": "^1.54.9",
-    "sass-loader": "^13.0.2",
-    "style-loader": "^3.3.1",
-    "terser-webpack-plugin": "^5.3.6",
-    "ts-loader": "^9.3.1",
     "typescript": "^4.8.3",
-    "webpack": "^5.74.0",
-    "webpack-cli": "^4.10.0",
-    "webpack-dev-server": "^4.11.0",
-    "webpack-merge": "^5.8.0",
-    "workbox-webpack-plugin": "^6.5.4"
+    "vite": "^5.0.0"
   },
   "dependencies": {
     "howler": "^2.2.3",

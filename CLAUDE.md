@@ -10,7 +10,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Build and serve locally**: `npm run serve`
 
 ### Project Info
-- **Framework**: TypeScript + Webpack 5 + Redom (lightweight DOM library)
+- **Framework**: TypeScript + Vite + Redom (lightweight DOM library)
 - **Entry point**: `src/index.ts`
 - **Output**: `dist/` (cleaned on every build)
 - **Source maps**: Inline in dev, external file in production
