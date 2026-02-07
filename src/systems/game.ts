@@ -12,15 +12,69 @@ import { state } from "./state";
 import { playLevel } from "./play";
 
 export const colorSchemes = [
-	{ name: 'Ocean', bg: '#03182b', color: '#8be9ff', shadow: '#4f838f', icon: 'ocean-mage' as keyof typeof SVGs },
-	{ name: 'Sunset', bg: '#2b1803', color: '#ffb366', shadow: '#8f6b4f', icon: 'sunset-ranger' as keyof typeof SVGs },
-	{ name: 'Forest', bg: '#0b1f1b', color: '#4fff88', shadow: '#2d8f52', icon: 'forest-druid' as keyof typeof SVGs },
-	{ name: 'Magenta', bg: '#2b0333', color: '#ff33ff', shadow: '#8f4f7f', icon: 'magenta-witch' as keyof typeof SVGs },
-	{ name: 'Gold', bg: '#2b2303', color: '#ffdd44', shadow: '#8f7f4f', icon: 'gold-knight' as keyof typeof SVGs },
-	{ name: 'Purple', bg: '#1a0b2e', color: '#bb86fc', shadow: '#6b4f8f', icon: 'purple-sorcerer' as keyof typeof SVGs },
-	{ name: 'Coral', bg: '#2b1a18', color: '#ff7f6b', shadow: '#8f5f52', icon: 'coral-pirate' as keyof typeof SVGs },
-	{ name: 'Cyan', bg: '#0b2929', color: '#33ffff', shadow: '#4f8f8f', icon: 'cyan-wizard' as keyof typeof SVGs },
-	{ name: 'Rose', bg: '#2b1a25', color: '#ff6bb6', shadow: '#8f5f7f', icon: 'rose-paladin' as keyof typeof SVGs },
+	{
+		name: "Death",
+		bg: "#03182b",
+		color: "#8be9ff",
+		shadow: "#4f838f",
+		icon: "ocean-mage" as keyof typeof SVGs,
+	},
+	{
+		name: "Sunset",
+		bg: "#2b1803",
+		color: "#ffb366",
+		shadow: "#8f6b4f",
+		icon: "sunset-ranger" as keyof typeof SVGs,
+	},
+	{
+		name: "Pine",
+		bg: "#0b1f1b",
+		color: "#4fff88",
+		shadow: "#2d8f52",
+		icon: "forest-druid" as keyof typeof SVGs,
+	},
+	{
+		name: "Octopus",
+		bg: "#2b0333",
+		color: "#ff33ff",
+		shadow: "#8f4f7f",
+		icon: "magenta-witch" as keyof typeof SVGs,
+	},
+	{
+		name: "Gold",
+		bg: "#2b2303",
+		color: "#ffdd44",
+		shadow: "#8f7f4f",
+		icon: "gold-knight" as keyof typeof SVGs,
+	},
+	{
+		name: "Plum",
+		bg: "#1a0b2e",
+		color: "#bb86fc",
+		shadow: "#6b4f8f",
+		icon: "purple-sorcerer" as keyof typeof SVGs,
+	},
+	{
+		name: "Coral",
+		bg: "#2b1a18",
+		color: "#ff7f6b",
+		shadow: "#8f5f52",
+		icon: "coral-pirate" as keyof typeof SVGs,
+	},
+	{
+		name: "Wizard",
+		bg: "#0b2929",
+		color: "#33ffff",
+		shadow: "#4f8f8f",
+		icon: "cyan-wizard" as keyof typeof SVGs,
+	},
+	{
+		name: "Rose",
+		bg: "#2b1a25",
+		color: "#ff6bb6",
+		shadow: "#8f5f7f",
+		icon: "rose-paladin" as keyof typeof SVGs,
+	},
 ];
 
 export let levelIndicator: HTMLElement;
@@ -54,7 +108,7 @@ export function openColorSchemeScreen() {
 			{
 				style: `background: ${scheme.bg}; border-color: ${scheme.color};`,
 			},
-			[iconSvg, el("span", scheme.name)]
+			[iconSvg, el("span", scheme.name)],
 		) as HTMLElement;
 
 		if (index === state.colorScheme) {
@@ -79,10 +133,7 @@ export function openColorSchemeScreen() {
 	openModal(
 		gameContainer,
 		"Color Schemes",
-		[
-			el("p", "Pick a color scheme!"),
-			schemeContainer,
-		],
+		[el("p", "Pick a color scheme!"), schemeContainer],
 		buttons,
 		() => {},
 		"color-scheme-modal",

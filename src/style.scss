@@ -826,8 +826,9 @@ textarea {
 }
 
 .color-scheme-modal main {
-	max-height: 200px;
-	overflow-y: auto;
+	max-height: 350px;
+	overflow: visible;
+	margin-bottom: 1rem;
 	scrollbar-width: none;
 }
 
